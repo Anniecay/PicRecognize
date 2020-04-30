@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "279126792360",
+    "firebase_url": "https://picrecognize-9a3d3.firebaseio.com",
+    "project_id": "picrecognize-9a3d3",
+    "storage_bucket": "picrecognize-9a3d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279126792360:android:ad55bddef40954212fca9d",
+        "android_client_info": {
+          "package_name": "com.example.picrecognize"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "279126792360-9vkm2vm7h9k9mdgjatiin0pkngte19pr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB63s0qVaNErnmwENlQW37PtjpJij0pW8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "279126792360-9vkm2vm7h9k9mdgjatiin0pkngte19pr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
