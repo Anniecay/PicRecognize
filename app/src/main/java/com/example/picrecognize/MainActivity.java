@@ -11,7 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     Bitmap bitmap = null;
     Switch aswitch;
     boolean isText;
+    Canvas canvas;
 
     GridLayout grid;
     @Override
@@ -169,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                     t.setLayoutParams(params);
                     grid.addView(t);
                 }
+                mainpic.setImageBitmap(getBitmap());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -178,14 +183,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void catchword(Bitmap bitmap) {
+    private void catchword(final Bitmap bitmap) {
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
         final FirebaseVisionTextRecognizer textRecognizer = FirebaseVision.getInstance()
                 .getOnDeviceTextRecognizer();
         textRecognizer.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionText>() {
             @Override
             public void onSuccess(FirebaseVisionText firebaseVisionText) {
+
                 grid.removeAllViews();
+                Bitmap bitmap1 = bitmap.copy(Bitmap.Config.ARGB_8888,true);
+
+                 canvas = new Canvas(bitmap1);
+
                 String resultText = firebaseVisionText.getText();
                 EditText editText = new EditText(getApplicationContext());
                 editText.setText(resultText);
@@ -196,6 +206,11 @@ public class MainActivity extends AppCompatActivity {
 
                 grid.addView(editText);
 
+                Paint paint = new Paint();
+                paint.setStyle(Paint.Style.STROKE);
+                paint.setStrokeWidth(3);
+                paint.setColor(Color.RED);
+                paint.setStrokeWidth(3);
 
                 for (FirebaseVisionText.TextBlock block : firebaseVisionText.getTextBlocks()) {
                     String blockText = block.getText();
@@ -210,12 +225,12 @@ public class MainActivity extends AppCompatActivity {
                             Float elementConfidence = element.getConfidence();
                             List<RecognizedLanguage> elementLanguages = element.getRecognizedLanguages();
                             wordTag.append(elementText+ " , ");
+                            Rect elementFrame = element.getBoundingBox();
+                            canvas.drawRect(elementFrame,paint);
                         }
 
                     }
-
-
-                }
+                }mainpic.setImageBitmap(bitmap1);
             }
         });
     }
